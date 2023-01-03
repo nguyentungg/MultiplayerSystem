@@ -29,7 +29,7 @@ void UMenu::MenuSetup(int32 NumberOfPublicConnections, FString TypeOfMatch, FStr
 			PlayerController->SetShowMouseCursor(true);
 		}
 	}
-
+	FWorldDelegates::LevelRemovedFromWorld.AddUObject(this, &UMenu::OnLevelRemovedFromWorld);
 	UGameInstance* GameInstance = GetGameInstance();
 	if (GameInstance)
 	{
@@ -65,10 +65,10 @@ bool UMenu::Initialize()
 	return true;
 }
 
-void UMenu::NativeDestruct()
+void UMenu::OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld)
 {
 	MenuTearDown();
-	Super::NativeDestruct();
+	//Super::OnLevelRemovedFromWorld(InLevel, InWorld);
 }
 
 void UMenu::OnCreateSession(bool bWasSuccessful)
